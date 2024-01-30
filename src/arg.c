@@ -230,7 +230,7 @@ int dcc_scan_args(char *argv[], char **input_file, char **output_file,
                 rs_log_info("gcc's debug option %s may write extra files; "
                             "running locally", a);
                 return EXIT_DISTCC_FAILED;
-            } else if (!strcmp(a, "-c")) {
+            } else if (!strcmp(a, "-c") || !strcmp(a, "-dc")) {
                 seen_opt_c = 1;
             } else if (!strcmp(a, "-o")) {
                 /* Whatever follows must be the output */
@@ -332,7 +332,7 @@ int dcc_set_action_opt(char **a, const char *new_c)
     int gotone = 0;
 
     for (; *a; a++)
-        if (!strcmp(*a, "-c") || !strcmp(*a, "-S")) {
+        if (!strcmp(*a, "-c") || !strcmp(*a, "-dc") || !strcmp(*a, "-S")) {
             *a = strdup(new_c);
             if (*a == NULL) {
                 rs_log_error("strdup failed");
@@ -344,7 +344,7 @@ int dcc_set_action_opt(char **a, const char *new_c)
         }
 
     if (!gotone) {
-        rs_log_error("failed to find -c or -S");
+        rs_log_error("failed to find -c, -dc or -S");
         return EXIT_DISTCC_FAILED;
     } else {
         return 0;

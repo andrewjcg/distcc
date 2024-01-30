@@ -252,6 +252,7 @@ int dcc_is_source(const char *sfile)
             || !strcmp(ext, "cpp")
             || !strcmp(ext, "cxx")
             || !strcmp(ext, "cp")
+            || !strcmp(ext, "cu")
             || !strcmp(ext, "c++");
     case 'C':
         return !strcmp(ext, "C");
